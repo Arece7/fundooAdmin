@@ -1,3 +1,10 @@
+/** Purpose         : Login page
+ *  @description
+ *  @file           : login.component.ts
+ *  @author         : Arghya Ray
+*/
+
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { first } from 'rxjs/operators';
@@ -15,7 +22,7 @@ export class LoginComponent implements OnInit {
   }
   data:any={}
   ngOnInit() {
-    $("#mail_err").hide();
+    $("#mail_err").hide();                  //initially to hide the message
     $("#pwd_err").hide();
 
     $("#btn").click(function(){
@@ -27,13 +34,13 @@ export class LoginComponent implements OnInit {
 
       if(index1==undefined||index2==undefined||index1==0||index2<index1||diff<=2)
       {
-        $("#mail_err").show();
+        $("#mail_err").show();                 //email validation
         return;
       }
       if(password.length<4||password==undefined)
       {
         $("#pwd_err").show();
-        return;
+        return;                                        //password validation
       }
 
 
@@ -42,18 +49,23 @@ export class LoginComponent implements OnInit {
     type: "POST",
     data: {
       "email": mail,
-      "password": password
+      "password": password                                //admin login api calling
     },
     dataType: "json",
     success:function(response){
       if(response){
         console.log(response);
         localStorage.setItem('token',response.id)
+        alert("Log In Successful");
         window.location.href="/dash";
       }
-
+    },
+    error:function(err)
+    {
+      alert("Invalid credintials");
     }
   });
+  
 
 });
 
