@@ -6,9 +6,9 @@
 
 
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { first } from 'rxjs/operators';
-import * as $ from 'jquery';
+
+
+import * as $ from 'jquery';             //importing jquery
 
 @Component({
   selector: 'app-login',
@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   }
   data:any={}
   ngOnInit() {
+try{
     $("#mail_err").hide();                  //initially to hide the message
     $("#pwd_err").hide();
 
@@ -42,7 +43,23 @@ export class LoginComponent implements OnInit {
         $("#pwd_err").show();
         return;                                        //password validation
       }
-
+      // if (validateEmail(sEmail)) {
+      //   alert('Nice!! your Email is valid, now you can continue..');
+      //   }
+      //   else {
+      //   alert('Invalid Email Address');
+      //   e.preventDefault();
+      //   }
+      //   });
+      // function validateEmail(sEmail) {
+      //   var filter = /^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/;
+      //   if (filter.test(sEmail)) {
+      //   return true;
+      //   }
+      //   else {
+      //   return false;
+      //   }
+      //   }
 
   $.ajax({
     url: "http://34.213.106.173/api/user/adminLogin",
@@ -55,9 +72,9 @@ export class LoginComponent implements OnInit {
     success:function(response){
       if(response){
         console.log(response);
-        localStorage.setItem('token',response.id)
+        localStorage.setItem('token',response.id) //setting the token to local storage
         alert("Log In Successful");
-        window.location.href="/dash";
+        window.location.replace("/dash");      //redirecting to dashboard
       }
     },
     error:function(err)
@@ -65,9 +82,17 @@ export class LoginComponent implements OnInit {
       alert("Invalid credintials");
     }
   });
-  
+
 
 });
+}
+ catch(e)                        //error handling
+{
+  if(e instanceof ReferenceError|| e instanceof SyntaxError ||e instanceof TypeError)
+  {
+  console.log("something bad happened");
+  }
+}
 
   }
 
