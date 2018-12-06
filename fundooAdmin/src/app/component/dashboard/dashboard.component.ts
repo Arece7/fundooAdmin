@@ -111,7 +111,9 @@ var html='';
       }
   })
   })
-
+  $("#question").click(function(){
+    window.location.replace("/question");
+  })
 
     })
   }
